@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2027 모의고사 V6 (태블릿/아이패드 최적화 에디션) - 임용고시 실전 문제풀이</title>
+  <link rel="stylesheet" href="style.css?v=2027_sec_v6">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Nanum+Myeongjo:wght@400;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- 1. 로그인 & 수험생 정보 입력 화면 -->
+  <div id="loginView" class="view-container">
+    <div class="login-wrapper">
+      
+      <!-- 그린 라운드 메인 타이틀 박스 -->
+      <div class="green-title-box">
+        <h1>V6 모의고사<br><span class="sub-title">(2027 임용고시 태블릿/아이패드 통합 모의고사)</span></h1>
+      </div>
+
+      <!-- 메인 콘텐츠 영역 -->
+      <div class="login-content-grid">
+        
+        <!-- 좌측: 시험 정보 및 계정 안내 -->
+        <div class="exam-info-card">
+          <div class="exam-header-text">2027학년도 중등교사 임용후보자 선정경쟁시험</div>
+          <div class="exam-subject-text">교육학 & 전문상담</div>
+          <div class="exam-user-fields">
+            <span>수험 번호 : ( <input type="text" id="inputStudentNo" placeholder="자동 생성" readonly> )</span>
+            <span>성 명 : ( <input type="text" id="inputName" placeholder="성명 입력"> )</span>
+          </div>
+          <table class="exam-spec-table">
+            <tr>
+              <td>1교시 교육학 (60분 / 20점)</td>
+              <td>2교시 전공 A (35분 / 40점)</td>
+              <td>3교시 전공 B (35분 / 40점)</td>
+            </tr>
+          </table>
+          <div class="user-list-info-box">
+            <p>💡 <strong>수험생 계정선택 후 비밀번호를 직접 입력하고 입장해 주세요.</strong></p>
+          </div>
+        </div>
+
+        <!-- 우측: 로그인 폼 -->
+        <div class="login-form-card">
+          <div class="dark-blue-header">
+            아이디/패스워드 입력하세요~~!
+          </div>
+          <div class="light-blue-body">
+            <div class="quick-user-select-row">
+              <label for="selectStudentQuick">⚡ 수험생 계정 선택 (30개 계정):</label>
+              <select id="selectStudentQuick" class="select-quick-user">
+                <!-- JS에서 자동 채움 -->
+              </select>
+            </div>
+            
+            <div class="form-row">
+              <label for="loginId">아이디:</label>
+              <input type="text" id="loginId" placeholder="아이디 선택 또는 입력">
+            </div>
+            <div class="form-row">
+              <label for="loginPw">패스워드:</label>
+              <input type="password" id="loginPw" placeholder="수험생 암호 직접 입력">
+            </div>
+          </div>
+          <div class="btn-group">
+            <button type="button" id="btnLogin" class="btn-start">🚀 1교시 교육학 논술 (60분) 입장</button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 2. 실전 분할 문제풀이 화면 -->
+  <div id="examView" class="view-container hidden">
+    
+    <!-- 🎯 V6 태블릿/아이패드 최적화 1줄 실전 헤더 (심플 콤팩트 디자인) -->
+    <header class="v6-top-navbar">
+      <div class="v6-nav-left">
+        <!-- 1. 회차 선택 -->
+        <select id="selectExamRound" class="v6-round-select" title="모의고사 회차 선택">
+          <option value="exam-0905_01" selected>제 0905_1</option>
+          <option value="exam-0903_01">제 0903_1</option>
+          <option value="exam-0903_02">제 0903_2</option>
+          <option value="exam-101">제 101 회</option>
+          <option value="exam-100">제 100 회</option>
+          <option value="exam-1">제 1 회</option>
+          <option value="exam-2">제 2 회</option>
+          <option value="exam-3">제 3 회</option>
+          <option value="exam-4">제 4 회</option>
+          <option value="exam-5">제 5 회</option>
+          <option value="exam-6">제 6 회</option>
+          <option value="exam-7">제 7 회</option>
+          <option value="exam-8">제 8 회</option>
+          <option value="exam-9">제 9 회</option>
+          <option value="exam-10">제 10 회</option>
+          <option value="exam-11">제 11 회</option>
+          <option value="exam-12">제 12 회</option>
+          <option value="exam-13">제 13 회</option>
+          <option value="exam-14">제 14 회</option>
+          <option value="exam-15">제 15 회</option>
+          <option value="exam-16">제 16 회</option>
+          <option value="exam-17">제 17 회</option>
+          <option value="exam-18">제 18 회</option>
+          <option value="exam-19">제 19 회</option>
+          <option value="exam-20">제 20 회</option>
+        </select>
+
+        <!-- 2. 교시 선택 탭 (1교시 / 2교시 / 3교시) -->
+        <div class="v6-period-tabs">
+          <button id="btnSecP" class="v6-period-tab active-sec" title="1교시 교육학">1교시</button>
+          <button id="btnSecA" class="v6-period-tab locked-tab" title="2교시 전공A">2교시</button>
+          <button id="btnSecB" class="v6-period-tab locked-tab" title="3교시 전공B">3교시</button>
+        </div>
+      </div>
+
+      <div class="v6-nav-center">
+        <!-- 3. 남은 시간 타이머 -->
+        <div class="v6-timer-pill" id="sectionTimerBox">
+          <span class="v6-timer-tag">남은시간</span>
+          <span id="sectionTimerDisplay" class="v6-timer-digits">60:00</span>
+          <button id="btnPauseTimer" class="v6-pause-btn" title="일시정지">⏸️</button>
+        </div>
+      </div>
+
+      <div class="v6-nav-right">
+        <!-- 4. 임시저장 & 팝업 답안지 열기 & 제출 버튼 -->
+        <button id="btnSaveTemp" class="v6-btn v6-btn-save" title="답안 임시저장">임시저장</button>
+        <button id="btnOpenOmrDrawer" class="v6-btn v6-btn-omr-highlight">📝 답안지 팝업</button>
+        <button id="btnCompleteCurrentSec" class="v6-btn v6-btn-green">🚀 1교시 제출</button>
+        <button id="btnSubmitExam" class="v6-btn v6-btn-blue hidden">📝 최종제출</button>
+        
+        <!-- 보조 도구 드롭다운 토글 -->
+        <div class="more-tools-dropdown">
+          <span id="displayStudentInfo" class="hidden">수험생: 홍길동</span>
+          <button id="btnMoreTools" class="v6-btn v6-btn-tool" type="button" title="부가 기능 (오답노트, 엑셀, 오디오, 커트라인)">⚙️</button>
+          <div id="moreToolsMenu" class="more-tools-menu hidden">
+            <button id="btnOpenWrongNotes" class="dropdown-item">📑 30대 오답노트 마스터 족보</button>
+            <button id="btnExportExcel" class="dropdown-item">📊 답안 엑셀 다운로드</button>
+            <button id="btnToggleSound" class="dropdown-item">🔊 시험장 오디오 토글</button>
+            <button id="btnToggleEyeComfort" class="dropdown-item">👁️ 눈보호 모드 토글</button>
+            <button id="btnToggleViewMode" class="dropdown-item">🖥️ 5:5 분할 ↔ 팝업 모드 전환</button>
+            <button id="btnAdminDashboardNav" class="dropdown-item hidden">👑 관리자 채점 센터</button>
+            <div class="dropdown-cutoff-info">
+              <div>🏛️ 인천 1차 컷: <strong>69.33점</strong></div>
+              <div>🥇 인천 1등 수석: <strong>78.67점</strong></div>
+              <div>🎯 내 합격 목표: <strong>75.00점+</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 감독관 안내 방송 팝업 및 전면 긴장감 펄스 레이어 -->
+    <div id="supervisorNoticeBar" class="supervisor-notice-bar hidden">
+      <span style="font-size: 20px;">📢</span>
+      <span id="supervisorNoticeText">시험 개시 10분 전입니다. 답안지에 수험번호와 성명을 확인하십시오.</span>
+    </div>
+    <div id="screenUrgencyGlow" class="screen-urgency-glow hidden"></div>
+
+    <!-- 📱 우측 전면 세로형 OMR 답안지 열기 탭 (클릭 시 2/3 답안지 팝업 오픈) -->
+    <div id="btnRightOmrStrip" class="right-omr-vertical-strip" title="클릭하여 OMR 답안지를 열고 작성하세요!">
+      <span class="omr-strip-letter">O</span>
+      <span class="omr-strip-letter">M</span>
+      <span class="omr-strip-letter">R</span>
+      <span class="omr-strip-letter">답</span>
+      <span class="omr-strip-letter">안</span>
+      <span class="omr-strip-letter">지</span>
+    </div>
+
+    <!-- 팝업 배경 백드롭 (클릭 시 닫힘) -->
+    <div id="omrBackdrop" class="omr-backdrop hidden"></div>
+
+    <!-- 메인 시험 화면 영역 (문제지 100% 전면 뷰 & 팝업 답안지) -->
+    <main class="split-main" id="splitMain">
+      
+      <!-- 📄 문제지 뷰어 (전면 100% 뷰) -->
+      <section class="pane left-pane full-paper-pane" id="paneLeft">
+        <div class="pane-header">
+          <h2>📄 문제지 (2027 KICE 평가원 실전 양식)</h2>
+          <div class="zoom-controls">
+            <span style="font-weight: 800; font-size: 13px; color: #334155;">글자 크기:</span>
+            <button type="button" id="btnZoomOut" class="btn-zoom" title="글자 축소">🔍 A- 작게</button>
+            <span id="zoomLevel" class="zoom-level-badge">120%</span>
+            <button type="button" id="btnZoomIn" class="btn-zoom" title="글자 확대">🔍 A+ 크게</button>
+            <button type="button" id="btnZoomReset" class="btn-zoom" title="기본 크기">🔄 기본</button>
+            <button type="button" id="btnToggleDarkTheme" class="btn-theme-toggle" title="다크/라이트 모드 전환">🌙 다크 모드 (흰색 고딕)</button>
+          </div>
+        </div>
+
+        <div id="questionTabs" class="q-tabs">
+          <!-- JS에서 탭 생성 -->
+        </div>
+
+        <!-- 🖍️ 4색 지문 형광펜 & 펜 색칠 & 수정테이프 & 노란 메모장 툴바 -->
+        <div class="passage-toolbar">
+          <span style="font-weight:800; font-size:12.5px; color:#0f172a;">🖍️ 지문 분석 툴바:</span>
+          <button type="button" id="btnHlYellow" style="background:#eab308; color:#0f172a; font-weight:800; border:none; padding:4px 9px; border-radius:5px; cursor:pointer; font-size:12px;">🖍️ 형광펜</button>
+          <button type="button" id="btnHlRed" style="background:#e11d48; color:#ffffff; font-weight:800; border:none; padding:4px 9px; border-radius:5px; cursor:pointer; font-size:12px;">🖊️ 빨간펜</button>
+          <button type="button" id="btnHlGreen" style="background:#10b981; color:#ffffff; font-weight:800; border:none; padding:4px 9px; border-radius:5px; cursor:pointer; font-size:12px;">💚 초록펜</button>
+          <button type="button" id="btnHlBlue" style="background:#3b82f6; color:#ffffff; font-weight:800; border:none; padding:4px 9px; border-radius:5px; cursor:pointer; font-size:12px;">💙 파란펜</button>
+          <button type="button" id="btnHlStrike" style="background:#475569; color:#ffffff; font-weight:800; border:none; padding:4px 9px; border-radius:5px; cursor:pointer; font-size:12px;">✂️ 수정테이프</button>
+          <button type="button" id="btnToggleStickyNote" style="background:#ca8a04; color:#ffffff; font-weight:800; border:none; padding:4px 9px; border-radius:5px; cursor:pointer; font-size:12px;">📌 메모장</button>
+          <button type="button" id="btnClearHl" style="background:#334155; color:#ffffff; font-weight:700; border:none; padding:4px 9px; border-radius:5px; cursor:pointer; font-size:12px;">🧹 지우기</button>
+        </div>
+
+        <!-- 평가원 시험지 서식 영역 (JS에서 2문항씩 완벽한 페이지별 2단 분할 렌더링) -->
+        <div id="paperContainer" class="paper-container">
+          <!-- 페이지 단위 렌더링 -->
+        </div>
+      </section>
+
+      <!-- 캡 드래그 리사이저 -->
+      <div id="resizer" class="resizer"></div>
+
+      <!-- 📝 팝업식 OMR 답안지 모달 (독립 팝업 카드) -->
+      <section class="pane right-pane popup-omr-modal" id="paneRight">
+        <div class="pane-header popup-omr-header">
+          <h2 id="omrTitleText">✏️ OMR 답안 작성 및 자가채점 (실시간 자동 합산)</h2>
+          
+          <!-- ✒️ 펜 색상 & 새로 시작 -->
+          <div class="pen-color-toolbar">
+            <span class="pen-color-label">✒️ 펜:</span>
+            <button type="button" id="btnPenBlack" class="btn-pen-color btn-pen-black active-pen" title="검정색 펜"></button>
+            <button type="button" id="btnPenRed" class="btn-pen-color btn-pen-red" title="빨간색 펜"></button>
+            <button type="button" id="btnPenBlue" class="btn-pen-color btn-pen-blue" title="파란색 펜"></button>
+            <button type="button" id="btnResetCurrentAnswers" style="background:#ef4444; color:#ffffff; font-weight:800; border:none; padding:3px 7px; border-radius:4px; cursor:pointer; font-size:11px; margin-left:4px;" title="답안 초기화">🧹 초기화</button>
+          </div>
+
+          <div class="answer-info" style="margin-left:auto; display:flex; align-items:center; gap:8px;">
+            <span id="totalCharCount">글자 수: 0자</span>
+            <button id="btnCloseOmrDrawer" class="btn-close-omr-modal" title="답안지 팝업을 닫고 문제지를 넓게 봅니다.">✕ 닫고 문제지 보기</button>
+          </div>
+        </div>
+
+        <div id="omrAnswerContainer" class="omr-container">
+          <!-- JS에서 문항별 답안 작성 카드 생성 -->
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- 3. 교시 완료 및 전환 모달 -->
+  <div id="sectionCompleteModal" class="modal-overlay hidden">
+    <div class="modal-card small-modal">
+      <div class="modal-header">
+        <h2 id="secCompleteTitle">🔔 교시 답안 제출 및 전환</h2>
+      </div>
+      <div class="modal-body text-center">
+        <p class="complete-msg" id="secCompleteMsg">현재 교시 답안이 보존되었습니다! 다음 교시 시험으로 이동합니다.</p>
+        <p class="sub-msg">다음 교시 시험을 시작하시겠습니까?</p>
+      </div>
+      <div class="modal-footer justify-center">
+        <button id="btnGoToNextSec" class="btn-primary btn-lg">🚀 다음 교시 시험 시작하기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 수험생 교시별/전체 채점 리포트 모달 -->
+  <div id="resultModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="resultModalTitle">🎉 1교시 교육학 논술 제출 및 답안 리포트 (20점 만점)</h2>
+        <button id="btnCloseModal" class="btn-close">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="score-banner">
+          <div class="score-circle">
+            <span id="scoreVal">0</span>
+            <span class="max-val">/ <span id="maxScoreVal">20</span>점</span>
+          </div>
+          <div class="score-info">
+            <h3 id="resultName">수험생 님</h3>
+            <p>제출시간: <span id="resultTime"></span></p>
+            <p class="score-comment">제출하신 교시의 작성 답안 및 모범답안 대조 내역입니다.</p>
+          </div>
+        </div>
+
+        <div id="resultDetailsList" class="result-details-list">
+          <!-- JS에서 단독 교시 내역만 출력 -->
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="btnPrintResult" class="btn-secondary">🖨️ 답안지 인쇄 (PDF)</button>
+        <button id="btnRetryExam" class="btn-primary">닫기 및 다음 교시 이동</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. 📑 30대 오답노트 마스터 족보 상시 조회 모달 -->
+  <div id="wrongNotesModal" class="modal-overlay hidden">
+    <div class="modal-card" style="max-width:950px; width:90%; max-height:85vh; display:flex; flex-direction:column;">
+      <div class="modal-header" style="background:#0284c7;">
+        <h2>📑 2027 출제 1순위 약점 극복 30대 오답노트 마스터 족보</h2>
+        <button id="btnCloseWrongNotesModal" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body" style="overflow-y:auto; padding:20px; font-family:'Noto Sans KR', sans-serif;">
+        <p style="font-size:13px; color:#0369a1; font-weight:700; margin-bottom:12px;">💡 <strong>시험 풀이 중 언제든 클릭하여 약점 키워드를 회독하고 서술 족보를 확인하세요!</strong></p>
+        <table style="width:100%; border-collapse:collapse; font-size:12px;">
+          <thead>
+            <tr style="background:#0f172a; color:#ffffff; text-align:center;">
+              <th style="padding:8px; border:1px solid #334155;">번호</th>
+              <th style="padding:8px; border:1px solid #334155; width:22%;">핵심 정식 명칭</th>
+              <th style="padding:8px; border:1px solid #334155; width:30%;">🔑 핵심 키워드 3~4개</th>
+              <th style="padding:8px; border:1px solid #334155;">✨ 서술형 만점 조립 족보</th>
+            </tr>
+          </thead>
+          <tbody style="line-height:1.6;">
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">01</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">심리사회적 유예기간</td><td style="padding:6px; border:1px solid #cbd5e1;">[성인 의무 유예], [자유로운 정체성 탐색], [Erikson & Marcia]</td><td style="padding:6px; border:1px solid #cbd5e1;">청소년기에 성인의 사회적 책무를 잠시 유예받고 자유롭게 정체성과 진로를 탐색하도록 허용된 발달적 기간</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">02</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">급성 스트레스 장애</td><td style="padding:6px; border:1px solid #cbd5e1;">[외상 사건 경험], [3일~1개월 이내], [PTSD 감별]</td><td style="padding:6px; border:1px solid #cbd5e1;">극심한 외상 사건 후 3일에서 1개월 이내에 침투, 해리, 과각성 증상이 나타나는 이상심리 장애 (1개월 이상 시 PTSD)</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">03</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">대리 경험</td><td style="padding:6px; border:1px solid #cbd5e1;">[또래 롤모델 관찰], [간접 성공 경험], [자기효능감]</td><td style="padding:6px; border:1px solid #cbd5e1;">자신과 유사한 또래 롤모델의 성공을 관찰하여 간접적으로 "나도 할 수 있다"는 자기효능감을 형성하는 원천</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">04</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">노르에피네프린</td><td style="padding:6px; border:1px solid #cbd5e1;">[보상의존성 (RD)], [사회적 보상 민감성]</td><td style="padding:6px; border:1px solid #cbd5e1;">타인의 칭찬과 인정 같은 사회적 보상 자극에 뇌가 민감하게 반응하여 관계를 지속하게 만드는 신경전달물질</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">05</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">투사</td><td style="padding:6px; border:1px solid #cbd5e1;">[수용 불가능한 충동], [타인의 탓], [무의식 방어기제]</td><td style="padding:6px; border:1px solid #cbd5e1;">자신의 수용할 수 없는 무의식적 분노나 충동을 타인의 탓으로 돌려 자기 불안을 방어하려는 정신분석 방어기제</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">06</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">우월성 추구</td><td style="padding:6px; border:1px solid #cbd5e1;">[아들러 (Adler)], [열등감 보상 동기], [완성 향한 선천적 동기]</td><td style="padding:6px; border:1px solid #cbd5e1;">신체적·심리적 열등감을 극복하고 스스로 더욱 완벽하고 뛰어난 존재로 성장하고자 하는 아들러의 핵심 동기</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">07</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">WISC-V 처리속도 소검사</td><td style="padding:6px; border:1px solid #cbd5e1;">[기호쓰기 (Coding)], [동형찾기 (Symbol Search)]</td><td style="padding:6px; border:1px solid #cbd5e1;">K-WISC-V 5판 처리속도 지표(PSI)를 구성하는 주요 소검사로 기호쓰기와 동형찾기가 정식 소검사임</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">08</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">병전 IQ 유지 소검사</td><td style="padding:6px; border:1px solid #cbd5e1;">[상식 (Information)], [어휘 (Vocabulary)]</td><td style="padding:6px; border:1px solid #cbd5e1;">뇌 손상이나 정신 병리에도 파괴되지 않고 안정적으로 유지되어 병전 지능(Pre-morbid IQ)을 추정하는 소검사</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">09</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">자아분화 2차원</td><td style="padding:6px; border:1px solid #cbd5e1;">[정서적 분화 (개인내적)], [대인관계적 분화 (개인간)]</td><td style="padding:6px; border:1px solid #cbd5e1;">① 정서적 분화: 사고와 감정을 분리하는 능력 / ② 대인관계적 분화: 나와 타인을 분리하여 독립성을 유지하는 능력</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">10</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">일치성 (Congruence)</td><td style="padding:6px; border:1px solid #cbd5e1;">[Holland RIASEC], [인격 유형과 직업 환경 부합]</td><td style="padding:6px; border:1px solid #cbd5e1;">개인의 인격 유형과 실제 종사하는 직업 환경 간의 들어맞는 부합 정도를 뜻하는 육각형 연관성 지표</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">11</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">자신에 대한 당위성</td><td style="padding:6px; border:1px solid #cbd5e1;">[Ellis REBT], [반드시 ~해야 한다], [당위적 신념 (Must)]</td><td style="padding:6px; border:1px solid #cbd5e1;">"나는 반드시 전교 1등을 해야 한다"처럼 자신에게 절대적이고 완벽한 이행을 요구하는 비합리적 신념 유형</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">12</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">성격적 vs 행동적 자기비난</td><td style="padding:6px; border:1px solid #cbd5e1;">[Abramson], [성격적: 고정 무기력], [행동적: 수정 가능]</td><td style="padding:6px; border:1px solid #cbd5e1;">성격적 자기비난: 수정 불가능한 성격 탓을 하여 무기력 유발 / 행동적 자기비난: 수정 가능한 행동 탓을 하여 재발 방지</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">13</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">신경성 식욕부진증</td><td style="padding:6px; border:1px solid #cbd5e1;">[DSM-5-TR], [심각한 저체중], [신체상 왜곡 & 살찌는 공포]</td><td style="padding:6px; border:1px solid #cbd5e1;">단순히 입맛이 없는 일반 식욕부진과 달리, 살찌는 공포와 왜곡된 신체상으로 인위적 음식을 거부하는 저체중 장애</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">14</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">평형화 (Equilibration)</td><td style="padding:6px; border:1px solid #cbd5e1;">[Piaget 인지발달], [동화와 조절의 조화]</td><td style="padding:6px; border:1px solid #cbd5e1;">동화와 조절 과정이 조화를 이루어 인지적 불평형(불균형) 상태를 극복하고 안정된 인지적 균형을 이루는 상태</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">15</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">기적질문 vs 예외질문</td><td style="padding:6px; border:1px solid #cbd5e1;">[기적: 미래상상 & 목표수립], [예외: 자원발굴]</td><td style="padding:6px; border:1px solid #cbd5e1;">기적질문: 문제 해결된 미래를 상상하여 목표 수립 및 희망 형성 / 예외질문: 문제 없는 순간을 발견하여 내담자 자원 발굴</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">16</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">일반능력지수 (GAI)</td><td style="padding:6px; border:1px solid #cbd5e1;">[FSIQ 오도 방지], [지표 차이 23점], [WMI/PSI 저하]</td><td style="padding:6px; border:1px solid #cbd5e1;">GAI 산출 조건: ① 5개 개별 지표 최고-최저 간 점수 차이가 23점 이상 벌어질 때 / ② 작업기억 또는 처리속도 지표 저하 시</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">17</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">탈삼각화 (Detriangulation)</td><td style="padding:6px; border:1px solid #cbd5e1;">[Bowen], [중립 유지], [자녀 분리 & 부부 직접 대화]</td><td style="padding:6px; border:1px solid #cbd5e1;">상담자가 중립을 지키면서 자녀(민재)를 부부 싸움 갈등에서 분리시키고, 부부 문제는 부부가 직접 대화로 해결하도록 지도함</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">18</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">사티어 회유형 vs 일치형</td><td style="padding:6px; border:1px solid #cbd5e1;">[Satir], [회유형: 자아 무시], [일치형: 자아·타인·상황 존중]</td><td style="padding:6px; border:1px solid #cbd5e1;">회유형: 타인과 상황은 존중하나 자신의 감정과 가치(자아)를 무시함 / 일치형: 자아, 타인, 상황 3요소를 모두 존중함</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">19</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">소크라테스식 논박</td><td style="padding:6px; border:1px solid #cbd5e1;">[Ellis REBT D단계], [논리적·실증적 자각 조력]</td><td style="padding:6px; border:1px solid #cbd5e1;">내담자의 비합리적 신념에 대해 논리적·실증적 질문을 던져 내담자 스스로 비합리성을 자각하고 합리적 신념으로 교정하도록 조력</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">20</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">인지적 탈융합</td><td style="padding:6px; border:1px solid #cbd5e1;">[ACT 수용전념치료], [생각과 자아 분리]</td><td style="padding:6px; border:1px solid #cbd5e1;">부정적 생각을 단지 생각일 뿐으로 여기며, 자아와 생각을 동일시하지 않고 관조적으로 거리를 두어 생각의 지배력에서 벗어나게 함</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">21</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">파괴적 기분조절장애 (DMDD)</td><td style="padding:6px; border:1px solid #cbd5e1;">[DSM-5-TR], [주3회 발작], [1년 지속], [ODD 감별]</td><td style="padding:6px; border:1px solid #cbd5e1;">10세 이전 발병하여 사소한 자극에 주 3회 이상 과도한 분노 발작을 보이고 1년 이상 지속되는 아동·청소년 우울장애 (반항장애 감별)</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">22</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">보호입원 & 제1호 조치</td><td style="padding:6px; border:1px solid #cbd5e1;">[정신건강복지법], [학폭법 제1호 피해학생 서면사과]</td><td style="padding:6px; border:1px solid #cbd5e1;">보호입원: 보호의무자 2인 동의 및 전문의 진단으로 행함 / 제1호 조치: 가해학생에 대한 '피해학생에 대한 서면사과' 조치</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">23</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">DRI 상반행동 차별강화</td><td style="padding:6px; border:1px solid #cbd5e1;">[Miltenberger ABA], [양립 불가능 행동 강화]</td><td style="padding:6px; border:1px solid #cbd5e1;">문제 행동과 동시에 수행할 수 없는 양립 불가능한 상반된 바람직한 행동(예: 의자 앉기)을 물리적으로 강하게 강화하는 기법</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">24</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">공황장애 파국적 해석 & 복식호흡</td><td style="padding:6px; border:1px solid #cbd5e1;">[Clark 인지 모델], [복식호흡: 과호흡 완화]</td><td style="padding:6px; border:1px solid #cbd5e1;">파국적 해석: 정상 신체 자극을 죽음으로 오해석 / 복식호흡 훈련: 깊고 천천히 숨을 마시고 내쉬어 생리적 과호흡 완화</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">25</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">경계선 성격장애 & DBT</td><td style="padding:6px; border:1px solid #cbd5e1;">[버림받음 공포], [자해 행동], [DBT 수용·변화]</td><td style="padding:6px; border:1px solid #cbd5e1;">타인에게 버림받는 공포와 극단적 정서 불완정을 보이며, DBT 마인드풀니스(수용)와 감정 조절(변화)을 통해 치료함</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">26</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">증상 처방 (Paradoxical)</td><td style="padding:6px; border:1px solid #cbd5e1;">[Haley 전략적 가족치료], [이중구속 상황 형성]</td><td style="padding:6px; border:1px solid #cbd5e1;">문제 행동(증상)을 오히려 계속하도록 지시하여 내담자가 저항하거나 증상을 스스로 통제하게 만드는 개입</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">27</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">MMPI-2-RF RC2 척도</td><td style="padding:6px; border:1px solid #cbd5e1;">[정서적 고갈/소원감], [긍정적 정서 결여]</td><td style="padding:6px; border:1px solid #cbd5e1;">기존 2번 척도의 혼란을 제거하고 긍정적 정서 경험의 결여와 삶의 열정 저하(정서적 소원감)를 정밀하게 사정하는 신형 척도</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">28</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">MMPI-2-RF PSY-5 INTR</td><td style="padding:6px; border:1px solid #cbd5e1;">[내향성 / 저정서성], [사회적 자극 회피]</td><td style="padding:6px; border:1px solid #cbd5e1;">5차원 성격척도 중 타인과의 사회적 관계를 피하고 긍정적 자극에서 즐거움을 느끼지 못하는 내향성/저정서성(Introversion) 척도</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">29</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">학폭법 제16조 제5호</td><td style="padding:6px; border:1px solid #cbd5e1;">[피해학생 보호 조치], [삭제지원], [사이버 딥페이크]</td><td style="padding:6px; border:1px solid #cbd5e1;">딥페이크 사진 유포 등 사이버 학교폭력 피해 발생 시 피해 영상 및 사진을 인터넷상에서 신속히 제거하도록 요청하는 '삭제지원' 조치</td></tr>
+            <tr><td style="padding:6px; border:1px solid #cbd5e1; text-align:center;">30</td><td style="padding:6px; border:1px solid #cbd5e1; font-weight:700; color:#b91c1c;">HTP 옹이/흉터 연령 추정</td><td style="padding:6px; border:1px solid #cbd5e1;">[나무 줄기 흉터], [과거 외상 발생 연령 추정]</td><td style="padding:6px; border:1px solid #cbd5e1;">나무 그림 줄기의 옹이나 흉터는 나무 전체 높이 대비 위치 비율을 통해 과거 외상 사건이 일어난 당시의 내담자 연령을 추정함</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer" style="padding:15px; background:#f8fafc; border-top:1px solid #e2e8f0; text-align:right;">
+        <button id="btnCloseWrongNotesBottom" class="btn-primary" style="background:#0284c7;">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 👑 관리자 대시보드 및 암호 변경 모달 -->
+  <div id="adminModal" class="modal-overlay hidden">
+    <div class="modal-card admin-modal-card">
+      <div class="modal-header admin-modal-header">
+        <h2>👑 2027 임용고시 관리자 채점 센터 (교육학 + 전공 A/B)</h2>
+        <div>
+          <button id="btnOpenChangePwModal" class="btn-secondary" style="font-size:13px; margin-right:10px;">🔒 나만의 관리자 비밀번호 변경</button>
+          <button id="btnCloseAdminModal" class="btn-close">&times;</button>
+        </div>
+      </div>
+
+      <div class="modal-body admin-modal-body">
+        <div class="admin-grid">
+          
+          <div class="admin-sub-list-panel">
+            <h3>📥 제출된 수험생 답안 목록</h3>
+            <div id="submissionList" class="sub-list">
+              <!-- JS에서 제출 목록 출력 -->
+            </div>
+          </div>
+
+          <div class="admin-grading-panel">
+            <div id="gradingHeader" class="grading-header">
+              <h3>👈 수험생을 선택하면 제출 답안지가 표시됩니다.</h3>
+            </div>
+            
+            <div id="gradingDetailsContainer" class="grading-details-container">
+              <!-- JS에서 내역 출력 -->
+            </div>
+
+            <div id="adminActionFooter" class="admin-action-footer hidden">
+              <button id="btnSaveAdminGrade" class="btn-admin-save">💾 관리자 수동 채점 & 첨삭 저장하기</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. 🔒 관리자 전용 암호 변경 모달 -->
+  <div id="changePwModal" class="modal-overlay hidden">
+    <div class="modal-card small-modal">
+      <div class="modal-header" style="background:#4c1d95;">
+        <h2>🔒 관리자 전용 암호 변경하기</h2>
+        <button id="btnClosePwModal" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body" style="display:flex; flex-direction:column; gap:15px; padding:25px;">
+        <p style="font-size:14px; color:#4c1d95; font-weight:700;">본인만 알 수 있는 안전한 관리자 전용 비밀번호로 변경하세요.</p>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <label style="font-size:13px; font-weight:800;">현재 비밀번호:</label>
+          <input type="password" id="inputCurrentPw" placeholder="현재 비밀번호 입력" style="padding:10px; border:1px solid #cbd5e1; border-radius:4px;">
+        </div>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <label style="font-size:13px; font-weight:800;">새 나만의 비밀번호:</label>
+          <input type="password" id="inputNewPw" placeholder="새 비밀번호 입력 (4자 이상)" style="padding:10px; border:1px solid #cbd5e1; border-radius:4px;">
+        </div>
+      </div>
+      <div class="modal-footer" style="justify-content:flex-end;">
+        <button id="btnSubmitChangePw" class="btn-primary" style="background:#7c3aed;">🔐 암호 변경 저장</button>
+  <!-- 📌 노란색 스티키 포스트잇 메모장 패널 (실시간 자동 저장) -->
+  <div id="stickyNoteWidget" class="sticky-note-widget hidden">
+    <div class="sticky-note-header">
+      <span class="sticky-title">📌 수험생 중요 노란색 메모장</span>
+      <div class="sticky-actions">
+        <span id="stickySaveBadge" class="sticky-save-badge">✓ 실시간 자동 저장됨</span>
+        <button type="button" id="btnCloseStickyNote" class="btn-sticky-close">&times;</button>
+      </div>
+    </div>
+    <div class="sticky-note-body">
+      <textarea id="stickyNoteTextarea" class="sticky-textarea" placeholder="💡 중요 개념, 기억할 공식, 키워드나 요약 메모를 여기에 적으세요! (100% 실시간 자동 저장됩니다)"></textarea>
+    </div>
+  </div>
+
+  <script src="fallback_exams.js?v=clean_purged_v99"></script>
+  <script src="app.js?v=clean_purged_v99"></script>
+</body>
+</html>
